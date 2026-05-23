@@ -15,7 +15,7 @@ jobs:
     steps: 
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v44
@@ -43,4 +43,4 @@ jobs:
           token: ${{ secrets.CI_PAT }}
           repository: reenipaul16/cicd-orchestration
           event-type: push-dockerfile
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "app_names":"${{ steps.extract.outputs.app_names }}"}'
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "app_names":"${{ steps.change-dir.outputs.app_names }}"}'
