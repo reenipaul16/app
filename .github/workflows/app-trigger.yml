@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'dockerfile/**'
+      - 'dockerfiles/**'
 
 jobs:
  # ── 1. Dockerfile change trigger ──────────────────────────────────────────
@@ -21,7 +21,7 @@ jobs:
         uses: tj-actions/changed-files@v44
         with:
           files: |
-            dockerfile/**
+            dockerfiles/**
 
       - name: Get changed dockerfile directories
         id: change-dir
