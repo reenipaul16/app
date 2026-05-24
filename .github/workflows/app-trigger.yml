@@ -45,3 +45,6 @@ jobs:
           repository: reenipaul16/cicd-orchestration
           event-type: push-dockerfile
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "app_names":"${{ steps.change-dir.outputs.app_names }}"}'
+
+
+
