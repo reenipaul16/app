@@ -39,4 +39,3 @@ app:
 
     path: /
     pathType: Prefix
-    
