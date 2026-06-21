@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.app.ingress.name }}
+  namespace: {{ .Values.app.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: "{{ .Values.app.ingress.className }}"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: {{ .Values.app.ingress.path }}
+            pathType: {{ .Values.app.ingress.pathType }}
+            backend:
+              service:
+                name: {{ .Values.app.service.name }}
+                port:
+                  number: {{ .Values.app.service.port }}

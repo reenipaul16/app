@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'helm/values.yaml'
+      - '**/**/values.yaml'
 
 jobs:
   build:
@@ -15,27 +15,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: Get changed files
-      #   id: changed-files
-      #   uses: tj-actions/changed-files@v44
-      #   with:
-      #     files: |
-      #       helm/values.yaml
+      - name: Get changed values files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/**/values.yaml
 
-      # - name: Get changed helm directories
-      #   id: change-dir
-      #   run: |
-      #     APP_NAMES=$(echo "${{ steps.changed-files.outputs.all_changed_files }}" \
-      #       | tr ' ' '\n' \
-      #       | xargs -n1 basename \
-      #       | cut -d'-' -f2 \
-      #       | sort -u \
-      #       | xargs)
-        
-      #     echo "App names: $APP_NAMES"
-      #     echo "app_names=$APP_NAMES" >> $GITHUB_OUTPUT
-      #   # | paste -sd "," -) -> this will give "python,"
-      #   # | tr '\n' ' ') -> was giving extra space "python "
+      - name: Print changed files
+        run: |
+          echo "Changed files:"
+          echo "helm_dir=${{ steps.changed-files.outputs.all_changed_files }}" >> $GITHUB_OUTPUT 
 
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v4
@@ -43,4 +33,4 @@ jobs:
           token: ${{ secrets.CI_PAT }}
           repository: reenipaul16/cicd-orchestration
           event-type: helm-deploy
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "helm_dir": "${{ steps.changed-files.outputs.all_changed_files }}"}'
