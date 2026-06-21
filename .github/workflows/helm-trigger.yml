@@ -33,4 +33,4 @@ jobs:
           token: ${{ secrets.CI_PAT }}
           repository: reenipaul16/cicd-orchestration
           event-type: helm-deploy
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repo_url": "${{ github.server_url }}/${{ github.repository }}", "helm_dir": "${{ steps.changed-files.outputs.all_changed_files }}"}'
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repo_url": "${{ github.server_url }}/${{ github.repository }}/tree/${{ github.ref_name }}", "helm_dir": "${{ steps.changed-files.outputs.all_changed_files }}"}'

@@ -14,7 +14,7 @@ app:
 
     env:
       ENV: test
-  
+
     readinessProbe:
       path: /health
       initialDelaySeconds: 5
