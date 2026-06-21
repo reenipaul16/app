@@ -1,0 +1,42 @@
+app: 
+  name: frontend-app
+  namespace: app
+
+  deployment:
+    replicaCount: 1
+
+    image:
+      repository: asia-south1-docker.pkg.dev/project-06cede75-fb8e-4bfb-984/repo-app/app-image
+      digest: "sha256:6c02e66ab5fac4b277415f3b97302785cb0140b1409b5800d4a7e1513e6fa754"
+
+    container:
+      port: 8080
+
+    env:
+      ENV: test
+
+
+    readinessProbe:
+      path: /health
+      initialDelaySeconds: 5
+      periodSeconds: 10
+
+    livenessProbe:
+      path: /health
+      initialDelaySeconds: 15
+      periodSeconds: 20
+
+# app-service
+  service:
+    name: frontend-service
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+
+# app-ingress
+  ingress:
+    name: frontend-ingress
+    className: gce
+
+    path: /
+    pathType: Prefix
